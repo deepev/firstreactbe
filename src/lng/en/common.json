@@ -1,0 +1,23 @@
+{
+    "auth": {
+        "userNotAllowed": "You are unable to access this platform.",
+        "accountNotFound": "There’s no account found with this {module}.",
+        "unAuthenticated": "UNAUTHENTICATED.",
+        "loginSucess": "Login successfully",
+        "loginError": "Something went wrong during login"
+    },
+    "module": {
+        "create": "{module} has been created successfully.",
+        "update": "{module} has been updated successfully.",
+        "delete": "{module} has been deleted successfully.",
+        "list": "All {module} have been obtained successfully.",
+        "get": "{module} has been obtained successfully.",
+        "createError": "Couldn't create the {module}.",
+        "updateError": "{module} not found or you can't update this {module}.",
+        "activate": "{module} activated.",
+        "deactivate": "{module} deactivated.",
+        "alreadyExists": "This {module} already exists.",
+        "notFound": "{module} not found!",
+        "notMatched": "Provided {module} is incorrect"
+    }
+}
