@@ -14,10 +14,13 @@
         "get": "{module} has been obtained successfully.",
         "createError": "Couldn't create the {module}.",
         "updateError": "{module} not found or you can't update this {module}.",
+        "getError": "{module} not found or you can't obtained this {module}",
+        "deleteError": "{module} not found or you can't delete this {module}",
+        "listError": "{module} not found or you can't get all {module}",
         "activate": "{module} activated.",
         "deactivate": "{module} deactivated.",
         "alreadyExists": "This {module} already exists.",
         "notFound": "{module} not found!",
-        "notMatched": "Provided {module} is incorrect"
+        "notMatched": "{module} do not match, please enter correct {module}"
     }
 }

@@ -3,20 +3,34 @@ import userService from '../services/user';
 
 const addUser = catchAsync(async (req, res) => {
     const result = await userService.addUser(req);
-    res.message = _localize('module.create', req, 'User');
-    return util.successResponse(result, res);
+    const messageKey = result 
+        ? _localize('module.create', req, 'User')
+        : _localize('module.createError', req, 'User');
+    const responseFunc = result ? util.successResponse : util.failureResponse
+    res.message = messageKey
+    return responseFunc(result || {}, res);
 });
 
 const loginUser = catchAsync(async (req, res) => {
     const result = await userService.loginUser(req, res);
-    res.message = _localize('module.loginSuccess', req, 'User');
-    return util.successResponse(result, res);
+    const messageKey = result 
+        ? _localize('auth.loginSucess', req)
+        : _localize('module.loginError', req);
+
+    const responseFunc = result ? util.successResponse : util.loginFailed
+    res.message = messageKey
+    return responseFunc(result || {}, res);
 });
 
 const getAll = catchAsync(async (req, res) => {
     const result = await userService.getAll(req);
-    res.message = _localize('module.list', req, 'User');
-    return util.successResponse(result, res);
+    const messageKey = result.length 
+        ? _localize('module.list', req, 'User')
+        : _localize('module.listError', req, 'User');
+
+    const responseFunc = result ? util.successResponse : util.recordNotFound
+    res.message = messageKey
+    return responseFunc(result || [], res);
 });
 
 const getToken = catchAsync(async (req, res) => {
