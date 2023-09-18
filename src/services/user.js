@@ -21,7 +21,7 @@ const loginUser = async (req, res) => {
     try {
         const existingUser = await User.findOne({ email: req.body.email });
         if (!existingUser) {
-            throw new Error(_localize('module.accountNotFound', req, 'Email'));
+            throw new Error(_localize('auth.accountNotFound', req, 'Email'));
         }
         const checkPassword = await existingUser.comparePassword(req.body.password);
 

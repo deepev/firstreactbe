@@ -15,7 +15,7 @@ const loginUser = catchAsync(async (req, res) => {
     const result = await userService.loginUser(req, res);
     const messageKey = result 
         ? _localize('auth.loginSucess', req)
-        : _localize('module.loginError', req);
+        : _localize('auth.loginError', req);
 
     const responseFunc = result ? util.successResponse : util.loginFailed
     res.message = messageKey
