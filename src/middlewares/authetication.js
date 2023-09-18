@@ -5,7 +5,7 @@ import config from '../config/config';
 const authentication = (req, res, next) => {
     const token = req.header('authorization');
 
-    if (!token) return res.status(400).send({ message: 'Access denied!' });
+    if (!token) return res.status(400).send({ message: _localize('auth.userNotAllowed', req) });
 
     try {
         //   checking for valid token
