@@ -9,7 +9,7 @@ const router = Router();
 router.post(
     '/create',
     authentication,
-    userupload.single('file'),
+    userupload.array('file'),
     fileController.addImage,
 );
 router.get('/list', authentication, fileController.getAll);

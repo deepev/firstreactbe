@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema(
     {
-        name: {
+        path: {
             type: String,
         },
         created_by: {

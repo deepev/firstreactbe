@@ -2,13 +2,34 @@ import File from '../models/userFile';
 
 const addImage = async (req) => {
     try {
-        const data = {
-            name: req.body.fileName,
-            created_by: req.user._id,
-            originalname: req.file.originalname,
-            fileName: req.file.fileName
+        /**
+         * single file upload
+         */
+        // const data = {
+        //     name: req.body.fileName,
+        //     created_by: req.user._id,
+        //     originalname: req.file.originalname,
+        //     fileName: req.file.fileName
+        // }
+        // return File.create(data);
+
+        /**
+         * multiple file upload
+         */
+        const bulkFiles = [];
+        for (const fileData of req.files) {
+            bulkFiles.push({
+                insertOne : {
+                    document: {
+                        path: fileData.path,
+                        created_by: req.user._id,
+                        originalName: fileData.originalname,
+                        fileName: fileData.filename    
+                    }
+                }
+            })
         }
-        return File.create(data);
+        return File.bulkWrite(bulkFiles);
     } catch (error) {
         console.log('error: ', error); 
     }
