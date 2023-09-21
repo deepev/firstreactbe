@@ -23,10 +23,9 @@ const schema = new Schema(
                 delete ret.__v;
             },
         },
+        timestamps: true
     },
-    {
-        timestamps: true,
-    },
+    
 );
 
 schema.pre('save', function (next) {
@@ -41,7 +40,7 @@ schema.pre('save', function (next) {
 });
 
 schema.methods.comparePassword = async function (passw) {
-    return await bcrypt.compare(passw, this.password);
+    return bcrypt.compare(passw, this.password);
 };
 
 const user = model('user', schema);

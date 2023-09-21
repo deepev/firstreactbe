@@ -9,9 +9,14 @@ const authentication = (req, res, next) => {
 
     try {
         //   checking for valid token
-        const validToken = jwt.verify(token, config.JWT_SECRET);
-        req.user = validToken;
-        next();
+        jwt.verify(token, config.JWT_SECRET, (err, decoded) => {
+            if (err) {
+                return res.status(403).send({ message: _localize('auth.userNotAllowed', req) });
+            } else {
+                req.user = decoded;
+                next();
+            }
+        })
     } catch (error) {
         console.log(error);
     }
