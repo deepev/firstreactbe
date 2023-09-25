@@ -7,8 +7,7 @@ const addTodo = catchAsync(async (req, res) => {
         res.message = _localize('module.create', req, 'Todo');
         return util.successResponse(result, res);
     } 
-    res.message = _localize('module.createError', req, 'Todo');
-    return util.failureResponse({}, res);
+    return util.failureResponse(_localize('module.createError', req, 'Todo'), res);
 });
 
 const getTodo = catchAsync(async (req, res) => {
@@ -17,8 +16,7 @@ const getTodo = catchAsync(async (req, res) => {
         res.message = _localize('module.get', req, 'Todo');
         return util.successResponse(result, res);
     } 
-    res.message = _localize('module.getError', req, 'Todo');
-    return util.failureResponse({}, res);
+    return util.failureResponse( _localize('module.getError', req, 'Todo'), res);
 });
 
 const getAll = catchAsync(async (req, res) => {
@@ -28,8 +26,7 @@ const getAll = catchAsync(async (req, res) => {
         res.message = _localize('module.list', req, 'Todo');
         return util.successResponse(result, res);
     } 
-    res.message = _localize('module.listError', req, 'Todo');
-    return util.failureResponse({}, res);
+    return util.failureResponse(_localize('module.listError', req, 'Todo'), res);
 });
 
 const deleteTodo = catchAsync(async (req, res) => {
@@ -39,8 +36,7 @@ const deleteTodo = catchAsync(async (req, res) => {
         res.message = _localize('module.delete', req, 'Todo');
         return util.successResponse(result, res);
     } 
-    res.message = _localize('module.deleteError', req, 'Todo');
-    return util.failureResponse({}, res);
+    return util.failureResponse(_localize('module.deleteError', req, 'Todo'), res);
 });
 
 export default {

@@ -9,6 +9,8 @@ import path from 'path';
 import config from './src/config/config';
 import util from './src/helpers/messages';
 import cors from 'cors';
+import connectDB from './src/config/db';
+
 const corsOptions ={
     origin:'http://localhost:3000', 
     credentials:true,            //access-control-allow-credentials:true
@@ -24,6 +26,8 @@ global._toTitleCase = toTitleCase;
 global._localize = localize;
 global.util = util;
 
+// DB connection 
+connectDB().then(() => console.log('MongoDB successfully establish'));
 
 i18next
     .use(FilesystemBackend)
