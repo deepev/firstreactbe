@@ -1,4 +1,5 @@
 import File from '../models/userFile';
+import dbService from '../helpers/dbService';
 
 const addImage = async (req) => {
     try {
@@ -24,7 +25,8 @@ const addImage = async (req) => {
                         path: fileData.path,
                         created_by: req.user._id,
                         originalName: fileData.originalname,
-                        fileName: fileData.filename    
+                        fileName: fileData.filename,
+                        fileType: fileData.filename.split('.').pop()    
                     }
                 }
             })
@@ -49,11 +51,19 @@ const getFile = async (req) => {
 
 const getAll = async (req) => {
     try {
-        const result = await File.find({ created_by: req.user._id });
-        if (!result) {
-            throw new Error(_localize('module.notFound', req, 'Files'));           
+        let query = {}, options = {};
+        if (req.body.options) {
+            options = {
+                ...req.body.options
+            }
         }
-        return result;
+        if (req.body.query) {
+            query = {
+                ...req.body.query
+            }
+        }
+        return dbService.getAllDocuments(File, query, options);   
+        // return getAllDocuments(File, req.body?.query || {} , req.body?.options || {})
     } catch (error) {
         console.log('error: ', error); 
     }
@@ -68,9 +78,58 @@ const deleteFile = async (req) => {
     }
 }
 
+const allFiles = async (req) => {
+    try {
+        
+        return File.aggregate([
+            {
+                $group: {
+                    _id: '$fileType',
+                    mostCommon: {
+                        $push: {
+                            originalName: '$originalName',
+                            fileType: '$fileType'
+                        }
+                    },
+                    total: { $sum: 1 }
+                }
+            },
+            {
+                $sort: { total: -1 }
+            },
+            {
+                $project: {
+                    types: {
+                        $slice: ['$mostCommon.fileType', 5]
+                    },
+                    total: 1
+                }
+            },
+            { $unwind: "$types" },
+            {
+                $group: { _id: null, types: { $addToSet: { name: '$types', total: '$total' } }, }
+            },
+            {
+                $project:
+                {
+                    _id: 0,
+                    types:
+                    {
+                        $sortArray: { input: '$types', sortBy: { total: -1 } }
+                    },
+                }
+            }
+        ]);
+    } catch (error) {
+        console.log('error: ', error);
+        
+    }
+}
+
 export default {
     addImage,
     getAll,
     getFile,
-    deleteFile
+    deleteFile,
+    allFiles
 }

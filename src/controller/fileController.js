@@ -21,7 +21,7 @@ const getFile = catchAsync(async (req, res) => {
 
 const getAll = catchAsync(async (req, res) => {
     const result = await fileService.getAll(req);
-    if (result.length) {
+    if (result.data.length) {
         res.message = _localize('module.list', req, 'Files');
         return util.successResponse(result, res);
     }
@@ -37,9 +37,19 @@ const deleteFile = catchAsync(async (req, res) => {
     return util.failureResponse(_localize('module.deleteError', req, 'File'), res);
 });
 
+const allFiles = catchAsync(async (req, res) => {
+    const result = await fileService.allFiles(req);
+    if (result) {
+        res.message = _localize('module.list', req, 'File');
+        return util.successResponse(result, res);
+    }
+    return util.failureResponse(_localize('module.listError', req, 'File'), res);
+});
+
 export default {
     addImage,
     getFile,
     getAll,
-    deleteFile
+    deleteFile,
+    allFiles
 }
