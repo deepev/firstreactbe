@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+const { v4: uuidv4 } = require('uuid');
 
 let todos = [
     {
@@ -30,33 +30,33 @@ let todos = [
 
 const getAll = () => {
     return todos
-}  
+}
 
 const addTodo = (data) => {
     const todo = { title: data.title, id: uuidv4(), completed: false };
-	todos.push(todo);
-	return todos
-}  
+    todos.push(todo);
+    return todos
+}
 
 const getTodo = (id) => {
     const index = todos.findIndex((todo) => todo.id == id);
-	const completed = Boolean(req.body.completed);
-	if (index > -1) {
-		todos[index].completed = completed;
-	}
-	return todos[index];
+    const completed = Boolean(req.body.completed);
+    if (index > -1) {
+        todos[index].completed = completed;
+    }
+    return todos[index];
 }
 
 const deleteTodo = (id) => {
-	const index = todos.findIndex((todo) => todo.id == id);
-	if (index > -1) {
-		todos.splice(index, 1);
-	}
+    const index = todos.findIndex((todo) => todo.id == id);
+    if (index > -1) {
+        todos.splice(index, 1);
+    }
 
-	return todos;
+    return todos;
 }
 
-export default {
+module.exports = {
     addTodo,
     getAll,
     getTodo,

@@ -1,5 +1,4 @@
-import multer from 'multer';
-import path from 'path';
+const multer = require('multer');
 
 const maxSize = 2 * 1024 * 1024;
 
@@ -13,4 +12,6 @@ const userprofile = multer.diskStorage({
     },
 });
 
-export const userupload = multer({ storage: userprofile, limits: { fileSize: maxSize } });
+const userupload = multer({ storage: userprofile, limits: { fileSize: maxSize } });
+
+module.exports = userupload;

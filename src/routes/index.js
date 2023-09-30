@@ -1,12 +1,12 @@
-import { Router } from "express";
-import user from './user';
-import file from './file';
-import todo from './todo';
+const { Router } = require('express');
+const user = require('./user');
+const file = require('./file');
+const todo = require('./todo');
 
 const router = Router();
 
 router.use('/user', user);
 router.use('/file', file);
-router.use('/todos', todo)
+router.use('/todos', todo);
 
-export default router;
+module.exports = router;

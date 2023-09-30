@@ -1,13 +1,17 @@
-import joi from 'joi';
+const joi = require('joi');
 
-export const createSchemaKeys = joi.object({
+const createSchemaKeys = joi.object({
     name: joi.string().required(),
     email: joi.string().email().required(),
     password: joi.string().min(6).required(),
 }).unknown(false);
 
-export const loginSchemaKeys = joi.object({
+const loginSchemaKeys = joi.object({
     email: joi.string().email().required(),
     password: joi.string().min(6).required(),
 }).unknown(false);
 
+module.exports = {
+    createSchemaKeys,
+    loginSchemaKeys
+}

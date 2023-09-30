@@ -1,8 +1,8 @@
-export const success = 200;
-export const create = 201;
-export const badRequest = 400;
-export const internalServerError = 500;
-export const unAuthorizedRequest = 403;
-export const notFound = 404;
-export const validationError = 422;
-export const unAuthorized = 401;
+exports.success = 200;
+exports.create = 201;
+exports.badRequest = 400;
+exports.internalServerError = 500;
+exports.unAuthorizedRequest = 403;
+exports.notFound = 404;
+exports.validationError = 422;
+exports.unAuthorized = 401;

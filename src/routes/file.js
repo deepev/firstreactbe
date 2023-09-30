@@ -1,8 +1,8 @@
-import { Router } from 'express';
-import fileController from '../controller/fileController';
-import validate from '../middlewares/validate';
-import { userupload } from '../middlewares/multer';
-import authentication from '../middlewares/authetication';
+const { Router } = require('express');
+const fileController = require('../controller/fileController');
+const validate = require('../middlewares/validate');
+const userupload = require('../middlewares/multer');
+const authentication = require('../middlewares/authetication');
 
 const router = Router();
 
@@ -15,6 +15,6 @@ router.post(
 router.post('/list', authentication, fileController.getAll);
 router.get('/get/:id', authentication, fileController.getFile);
 router.delete('/get/:id', authentication, fileController.deleteFile);
-router.get('/list', fileController.allFiles);
+router.get('/list', authentication, fileController.allFiles);
 
-export default router;
+module.exports = router;

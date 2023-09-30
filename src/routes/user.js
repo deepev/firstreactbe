@@ -1,8 +1,11 @@
-import { Router } from "express";
-import userController from '../controller/userController';
-import validate from "../middlewares/validate";
-import { createSchemaKeys, loginSchemaKeys } from '../helpers/validations/user';
-import authentication from "../middlewares/authetication";
+const { Router } = require('express');
+const userController = require('../controller/userController');
+const validate = require('../middlewares/validate');
+const {
+    createSchemaKeys,
+    loginSchemaKeys,
+} = require('../helpers/validations/user');
+const authentication = require('../middlewares/authetication');
 
 const router = Router();
 
@@ -11,4 +14,4 @@ router.post('/login', validate(loginSchemaKeys), userController.loginUser);
 router.get('/list', authentication, userController.getAll);
 router.get('/token', userController.getToken);
 
-export default router;
+module.exports = router;

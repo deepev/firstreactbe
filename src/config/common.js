@@ -1,5 +1,5 @@
 
-export const RESPONSE_CODE = {
+const RESPONSE_CODE = {
     DEFAULT: 'SUCCESS',
     LOGIN: 'LOGIN',
     OTP: 'OTP_VERIFIED',
@@ -7,3 +7,7 @@ export const RESPONSE_CODE = {
     ERROR: 'ERROR',
     ALERTS: 'ALERTS',
 };
+
+module.exports = {
+    RESPONSE_CODE
+}

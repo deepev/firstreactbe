@@ -1,4 +1,4 @@
-import { getFilterQuery } from '../services/filterQuery';
+const { getFilterQuery } = require('../services/filterQuery');
 
 /*
  * createDocument : create any mongoose document
@@ -69,7 +69,7 @@ const getAllDocuments = async (model, query, options) => {
 };
 
 
-export default {
+module.exports = {
     createDocument,
     updateDocument,
     deleteMultipleDocuments,

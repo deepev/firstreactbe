@@ -1,4 +1,4 @@
-import util from '../helpers/messages';
+const util = require('../helpers/messages');
 
 const validate = (validator) => {
     return async function (req, res, next) {
@@ -12,4 +12,4 @@ const validate = (validator) => {
     };
 };
 
-export default validate;
+module.exports = validate;

@@ -1,32 +1,30 @@
-import express from 'express';
-import routes from './src/routes';
-import { catchAsync } from './src/helpers/catchAsync';
-import { toTitleCase, localize } from './src/helpers/localize';
-import i18next from 'i18next';
-import i18nextMiddleware from 'i18next-http-middleware';
-import FilesystemBackend from 'i18next-node-fs-backend';
-import path from 'path';
-import config from './src/config/config';
-import util from './src/helpers/messages';
-import cors from 'cors';
-import connectDB from './src/config/db';
+const express = require('express');
+const routes = require('./src/routes');
+const { catchAsync } = require('./src/helpers/catchAsync');
+const { toTitleCase, localize } = require('./src/helpers/localize');
+const i18next = require('i18next');
+const i18nextMiddleware = require('i18next-http-middleware');
+const FilesystemBackend = require('i18next-node-fs-backend');
+const path = require('path');
+const config = require('./src/config/config');
+const util = require('./src/helpers/messages');
+const cors = require('cors');
+const connectDB = require('./src/config/db');
 
-const corsOptions ={
-    origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
-import cookieParser  from 'cookie-parser';
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true, //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
+};
 const app = express();
 
 app.use(cors(corsOptions));
-app.use(cookieParser ());
 global.catchAsync = catchAsync;
 global._toTitleCase = toTitleCase;
 global._localize = localize;
 global.util = util;
 
-// DB connection 
+// DB connection
 connectDB().then(() => console.log('MongoDB successfully establish'));
 
 i18next
@@ -50,8 +48,8 @@ i18next
     });
 app.use(i18nextMiddleware.handle(i18next));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); 
+app.use(express.urlencoded({ extended: true }));
 app.use(config.API_PREFIX, routes);
 app.use(express.static('public'));
 
-export default app;
+module.exports = app;

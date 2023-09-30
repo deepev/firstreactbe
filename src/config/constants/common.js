@@ -1,4 +1,4 @@
-export const PAGINATION_LABEL = {
+const PAGINATION_LABEL = {
     totalDocs: 'itemCount',
     docs: 'data',
     limit: 'perPage',
@@ -9,3 +9,5 @@ export const PAGINATION_LABEL = {
     pagingCounter: 'slNo',
     meta: 'paginator',
 };
+
+module.exports = PAGINATION_LABEL

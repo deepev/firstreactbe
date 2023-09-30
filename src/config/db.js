@@ -1,22 +1,20 @@
-import mongoose from 'mongoose';
-import config from './config';
+const mongoose = require('mongoose');
+const config = require('./config');
 
 const connectDB = async () => {
     try {
         const mongo_host = config.MONGODB_URL;
         const options = {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
         };
-        await mongoose.connect(mongo_host,);
-        console.info('MongoDB Connected...'); 
-       
+        await mongoose.connect(mongo_host);
+        console.info('MongoDB Connected...');
     } catch (error) {
-        console.error('err');
-        console.error(error);
+        console.log('error: ', error);
         // Exit process with failure
         process.exit(1);
     }
-}
+};
 
-export default connectDB;
+module.exports = connectDB;

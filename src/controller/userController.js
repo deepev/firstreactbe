@@ -1,5 +1,5 @@
-import { catchAsync } from "../helpers/catchAsync";
-import userService from '../services/user';
+const catchAsync = require("../helpers/catchAsync");
+const userService = require('../services/user');
 
 const addUser = catchAsync(async (req, res) => {
     const result = await userService.addUser(req);
@@ -13,7 +13,7 @@ const addUser = catchAsync(async (req, res) => {
 const loginUser = catchAsync(async (req, res) => {
     const result = await userService.loginUser(req, res);
     if (result) {
-        res.message =_localize('auth.loginSucess', req)
+        res.message = _localize('auth.loginSucess', req)
         return util.successResponse(result, res);
     }
     return util.failureResponse(_localize('auth.loginError', req), res);
@@ -34,7 +34,7 @@ const getToken = catchAsync(async (req, res) => {
     return util.successResponse(result, res);
 });
 
-export default {
+module.exports = {
     addUser,
     loginUser,
     getAll,

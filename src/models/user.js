@@ -1,5 +1,5 @@
-import { Schema, model } from 'mongoose';
-import bcrypt from 'bcrypt';
+const { Schema, model } = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const schema = new Schema(
     {
@@ -12,7 +12,7 @@ const schema = new Schema(
         password: {
             type: String,
         },
-        refreshToken: { 
+        refreshToken: {
             type: String
         }
     },
@@ -25,7 +25,7 @@ const schema = new Schema(
         },
         timestamps: true
     },
-    
+
 );
 
 schema.pre('save', function (next) {
@@ -45,4 +45,4 @@ schema.methods.comparePassword = async function (passw) {
 
 const user = model('user', schema);
 
-export default user;
+module.exports = user;

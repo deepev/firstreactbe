@@ -1,5 +1,13 @@
-import { success, badRequest, unAuthorizedRequest, create, internalServerError, notFound, validationError } from '../helpers/responseCode';
-import { RESPONSE_CODE } from '../config/common';
+const {
+    success,
+    badRequest,
+    unAuthorizedRequest,
+    create,
+    internalServerError,
+    notFound,
+    validationError,
+} = require('../helpers/responseCode');
+const { RESPONSE_CODE } = require('../config/common');
 
 const unAuthenticated = (res) => {
     return res.status(unAuthorizedRequest).json({
@@ -126,7 +134,6 @@ const inValidParam = (message, res) => {
     });
 };
 
-
 const verificationOTP = (result, res) => {
     return res.status(success).json({
         code: RESPONSE_CODE.OTP,
@@ -215,8 +222,8 @@ const loginApiUserFailed = (res) => {
         data: {},
     });
 };
-  
-export default {
+
+module.exports = {
     unAuthenticated,
     successResponse,
     failedSoftDelete,

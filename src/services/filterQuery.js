@@ -1,4 +1,4 @@
-export const getFilterQuery = async (query) => {
+exports.getFilterQuery = async (query) => {
     let newQuery = [];
     if (query.search && query.search !== '') {
         const searchQuery = query.searchColumns.map((column) => {

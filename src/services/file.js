@@ -1,5 +1,5 @@
-import File from '../models/userFile';
-import dbService from '../helpers/dbService';
+const File = require('../models/userFile');
+const dbService = require('../helpers/dbService');
 
 const addImage = async (req) => {
     try {
@@ -17,25 +17,26 @@ const addImage = async (req) => {
         /**
          * multiple file upload
          */
-        const bulkFiles = [];
-        for (const fileData of req.files) {
-            bulkFiles.push({
-                insertOne : {
+
+        const bulkFiles = req.files.map((eachFile) => {
+            return {
+                insertOne: {
                     document: {
-                        path: fileData.path,
+                        path: eachFile.path,
                         created_by: req.user._id,
-                        originalName: fileData.originalname,
-                        fileName: fileData.filename,
-                        fileType: fileData.filename.split('.').pop()    
-                    }
-                }
-            })
-        }
+                        originalName: eachFile.originalname,
+                        fileName: eachFile.filename,
+                        fileType: eachFile.filename.split('.').pop(),
+                    },
+                },
+            };
+        });
+
         return File.bulkWrite(bulkFiles);
     } catch (error) {
-        console.log('error: ', error); 
+        console.log('error: ', error);
     }
-}
+};
 
 const getFile = async (req) => {
     try {
@@ -45,42 +46,34 @@ const getFile = async (req) => {
         }
         return result;
     } catch (error) {
-        console.log('error: ', error); 
+        console.log('error: ', error);
     }
-}
+};
 
 const getAll = async (req) => {
     try {
-        let query = {}, options = {};
-        if (req.body.options) {
-            options = {
-                ...req.body.options
-            }
-        }
-        if (req.body.query) {
-            query = {
-                ...req.body.query
-            }
-        }
-        return dbService.getAllDocuments(File, query, options);   
-        // return getAllDocuments(File, req.body?.query || {} , req.body?.options || {})
+        return dbService.getAllDocuments(
+            File,
+            req.body?.query || {},
+            req.body?.options || {},
+        );
     } catch (error) {
-        console.log('error: ', error); 
+        console.log('error: ', error);
     }
-}
+};
 
 const deleteFile = async (req) => {
     try {
         return File.deleteOne({ _id: req.params.id });
     } catch (error) {
-        console.log('error: ', error); 
+        console.log('error: ', error);
         throw new Error(error.message);
     }
-}
+};
 
 const allFiles = async (req) => {
     try {
-        
+        const limit = parseInt(req.query.limit) || 5;
         return File.aggregate([
             {
                 $group: {
@@ -88,48 +81,51 @@ const allFiles = async (req) => {
                     mostCommon: {
                         $push: {
                             originalName: '$originalName',
-                            fileType: '$fileType'
-                        }
+                            fileType: '$fileType',
+                        },
                     },
-                    total: { $sum: 1 }
-                }
+                    total: { $sum: 1 },
+                },
             },
             {
-                $sort: { total: -1 }
+                $sort: { total: -1 },
+            },
+            {
+                $limit: limit,
             },
             {
                 $project: {
                     types: {
-                        $slice: ['$mostCommon.fileType', 5]
+                        $slice: ['$mostCommon.fileType', 5],
                     },
-                    total: 1
-                }
+                    total: 1,
+                },
             },
-            { $unwind: "$types" },
+            { $unwind: '$types' },
             {
-                $group: { _id: null, types: { $addToSet: { name: '$types', total: '$total' } }, }
+                $group: {
+                    _id: null,
+                    types: { $addToSet: { name: '$types', total: '$total' } },
+                },
             },
             {
-                $project:
-                {
+                $project: {
                     _id: 0,
-                    types:
-                    {
-                        $sortArray: { input: '$types', sortBy: { total: -1 } }
+                    types: {
+                        $sortArray: { input: '$types', sortBy: { total: -1 } },
                     },
-                }
-            }
+                },
+            },
         ]);
     } catch (error) {
         console.log('error: ', error);
-        
     }
-}
+};
 
-export default {
+module.exports = {
     addImage,
     getAll,
     getFile,
     deleteFile,
-    allFiles
-}
+    allFiles,
+};

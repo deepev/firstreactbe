@@ -1,6 +1,6 @@
-import User from '../models/user';
-import jwt from 'jsonwebtoken';
-import config from '../config/config';
+const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+const config = require('../config/config');
 
 const secreteKey = config.JWT_SECRET;
 
@@ -45,8 +45,8 @@ const loginUser = async (req, res) => {
                 expiresIn: '1d',
             },
         );
-        await User.updateOne({ _id: existingUser._id },{ $set: { refreshToken: refreshToken} });
-        res.cookie('refreshToken', refreshToken,{
+        await User.updateOne({ _id: existingUser._id }, { $set: { refreshToken: refreshToken } });
+        res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000
         });
@@ -76,22 +76,22 @@ const getAll = async (req) => {
     }
 }
 
-const refreshToken = async(req, res) => {
+const refreshToken = async (req, res) => {
     try {
-       
+
         const refreshToken = res.cookie.refreshToken;
         console.log('refreshToken: ', refreshToken);
-        if(!refreshToken) {
+        if (!refreshToken) {
             throw new Error('you are not allow to access');
         };
         const user = await User.find({ refreshToken: refreshToken });
-        if(!user[0]) return res.sendStatus(403);
+        if (!user[0]) return res.sendStatus(403);
         jwt.verify(refreshToken, secreteKey, (err, decoded) => {
-            if(err) return res.sendStatus(403);
+            if (err) return res.sendStatus(403);
             const userId = user[0].id;
             const name = user[0].name;
             const email = user[0].email;
-            const accessToken = jwt.sign({userId, name, email}, secreteKey,{
+            const accessToken = jwt.sign({ userId, name, email }, secreteKey, {
                 expiresIn: '15s'
             });
             res.json({ accessToken });
@@ -102,7 +102,7 @@ const refreshToken = async(req, res) => {
 }
 
 
-export default {
+module.exports = {
     addUser,
     loginUser,
     getAll,

@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate-v2';
-import idValidator from 'mongoose-id-validator';
-import { PAGINATION_LABEL } from '../config/constants/common';
+const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
+const idValidator = require('mongoose-id-validator');
+const { PAGINATION_LABEL } = require('../config/constants/common');
 
 mongoosePaginate.paginate.options = { customLabels: PAGINATION_LABEL };
 
@@ -30,4 +30,4 @@ schema.plugin(idValidator);
 
 const file = mongoose.model('file', schema);
 
-export default file;
+module.exports = file;

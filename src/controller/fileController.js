@@ -1,5 +1,5 @@
-import fileService from '../services/file';
-import { catchAsync } from "../helpers/catchAsync";
+const fileService = require('../services/file');
+const catchAsync = require("../helpers/catchAsync");
 
 const addImage = catchAsync(async (req, res) => {
     const result = await fileService.addImage(req);
@@ -21,7 +21,7 @@ const getFile = catchAsync(async (req, res) => {
 
 const getAll = catchAsync(async (req, res) => {
     const result = await fileService.getAll(req);
-    if (result.data.length) {
+    if (result.docs.length) {
         res.message = _localize('module.list', req, 'Files');
         return util.successResponse(result, res);
     }
@@ -46,7 +46,7 @@ const allFiles = catchAsync(async (req, res) => {
     return util.failureResponse(_localize('module.listError', req, 'File'), res);
 });
 
-export default {
+module.exports = {
     addImage,
     getFile,
     getAll,

@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import todoController from '../controller/todoController';
+const { Router } = require('express');
+const todoController = require('../controller/todoController');
 
 const router = Router();
 
@@ -11,4 +11,4 @@ router.get('/:id', todoController.getTodo);
 
 router.delete('/:id', todoController.deleteTodo);
 
-export default router;
+module.exports = router;
