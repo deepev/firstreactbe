@@ -1,11 +1,10 @@
 const todoService = require('../services/todo');
-const catchAsync = require('../helpers/catchAsync');
 
 const addTodo = catchAsync(async (req, res) => {
     const result = todoService.addTodo(req.body);
     if (result) {
         res.message = _localize('module.create', req, 'Todo');
-        return util.successResponse(result, res);
+        return util.createdDocumentResponse(result, res);
     }
     return util.failureResponse(_localize('module.createError', req, 'Todo'), res);
 });

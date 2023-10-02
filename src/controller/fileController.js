@@ -1,11 +1,10 @@
 const fileService = require('../services/file');
-const catchAsync = require("../helpers/catchAsync");
 
 const addImage = catchAsync(async (req, res) => {
     const result = await fileService.addImage(req);
     if (result) {
         res.message = _localize('module.create', req, 'File');
-        return util.successResponse(result, res);
+        return util.createdDocumentResponse(result, res);
     }
     return util.failureResponse(_localize('module.createError', req, 'File'), res);
 });

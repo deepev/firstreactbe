@@ -1,6 +1,5 @@
 const express = require('express');
-const routes = require('./src/routes');
-const { catchAsync } = require('./src/helpers/catchAsync');
+const catchAsync = require('./src/helpers/catchAsync');
 const { toTitleCase, localize } = require('./src/helpers/localize');
 const i18next = require('i18next');
 const i18nextMiddleware = require('i18next-http-middleware');
@@ -49,7 +48,7 @@ i18next
 app.use(i18nextMiddleware.handle(i18next));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(config.API_PREFIX, routes);
+app.use(config.API_PREFIX, require('./src/routes'));
 app.use(express.static('public'));
 
 module.exports = app;

@@ -1,12 +1,9 @@
 const { Router } = require('express');
-const user = require('./user');
-const file = require('./file');
-const todo = require('./todo');
 
 const router = Router();
 
-router.use('/user', user);
-router.use('/file', file);
-router.use('/todos', todo);
+router.use('/user', require('./user'));
+router.use('/file', require('./file'));
+router.use('/todos', require('./todo'));
 
 module.exports = router;
